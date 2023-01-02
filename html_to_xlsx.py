@@ -45,10 +45,13 @@ def main():
     root_folder = "xlsx"
     file_name = f"""{root_folder}/{datetime.utcnow().strftime("%Y%m%d--%H%M%S")}.xlsx"""
 
+    if not os.path.exists(root_folder):
+        os.makedirs(root_folder)
+
     workbook = xlsxwriter.Workbook(file_name)
     worksheet = workbook.add_worksheet()
     for idx, data in enumerate(results):
-        worksheet.write(idx + 1, *data)
+        worksheet.write_row(idx, 0, tuple(data))
     workbook.close()
 
     print(f"All data saved to {file_name}")
